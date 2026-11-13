@@ -1,0 +1,17 @@
+# Despliegue Oracle
+
+Sitio: https://nihongonotto.duckdns.org
+
+Caddy termina HTTPS y renueva el certificado. Docker ejecuta Next.js como usuario sin privilegios en `127.0.0.1:3000`. UFW permite 22, 80 y 443. La imagen OCI tenía un rechazo previo a UFW: se añadió la excepción web antes de esa regla y se guardó en `/etc/iptables/rules.v4`.
+
+Cada versión se sincroniza por rsync a `/opt/nihongonotto/releases/<commit>`. Los secretos están en `shared/app.env` y `shared/oci.pem`, fuera de las versiones y de la imagen. La clave se monta como archivo de solo lectura.
+
+```sh
+DEPLOY_HOST=ubuntu@158.101.108.181 DEPLOY_SSH_KEY=/ruta/clave scripts/deploy-oracle.sh
+```
+
+El script construye la imagen, espera el estado saludable y actualiza el enlace `current`. Las imágenes conservan la etiqueta del commit. Para restaurar una anterior, ejecutar Compose desde esa versión con su `RELEASE_TAG`; no se automatiza todavía la restauración.
+
+Supabase permite los callbacks públicos y locales. El dominio público es el Site URL. Las migraciones se ejecutan por separado una sola vez.
+
+Pendiente: configurar secretos SSH y el flujo de GitHub Actions para automatizar el script. Vercel todavía no está desplegado.

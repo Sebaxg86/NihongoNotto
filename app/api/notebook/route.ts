@@ -1,7 +1,7 @@
 import {createClient} from '@/lib/supabase/server';
 export async function POST(request:Request){
  const headers={'Cache-Control':'no-store'};
- const origin=request.headers.get('origin');if(origin&&origin!==new URL(request.url).origin)return Response.json({error:'Origen no permitido.'},{status:403,headers});
+ const origin=request.headers.get('origin');if(origin&&origin!==new URL(process.env.APP_URL || request.url).origin)return Response.json({error:'Origen no permitido.'},{status:403,headers});
  const db=await createClient();const {data:{user}}=await db.auth.getUser();if(!user)return Response.json({error:'Inicia sesión para guardar.'},{status:401,headers});
  let body;try{body=await request.json();}catch{return Response.json({error:'Datos no válidos.'},{status:400,headers});}
  const limits={original:2000,translated:16000,japanese:16000,kana:16000,romaji:32000};
