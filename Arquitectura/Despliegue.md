@@ -14,4 +14,4 @@ El script construye la imagen, espera el estado saludable y actualiza el enlace 
 
 Supabase permite los callbacks públicos y locales. El dominio público es el Site URL. Las migraciones se ejecutan por separado una sola vez.
 
-Pendiente: configurar secretos SSH y el flujo de GitHub Actions para automatizar el script. Vercel todavía no está desplegado.
+GitHub Actions ejecuta pruebas, compilación, despliegue y comprobación HTTPS en cada push a `main` o ejecución manual. Los secretos `ORACLE_SSH_KEY`, `ORACLE_KNOWN_HOSTS` y `SUPABASE_PUBLISHABLE_KEY` están configurados en GitHub. La clave SSH es exclusiva para Actions y su acceso hereda los permisos del usuario ubuntu. No se ejecutan despliegues simultáneos. Vercel todavía no está desplegado.

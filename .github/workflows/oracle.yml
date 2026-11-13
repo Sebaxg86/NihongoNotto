@@ -1,0 +1,46 @@
+name: Validar y desplegar Oracle
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: oracle-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://emsbdfakrxqrvetsanje.supabase.co
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+      APP_URL: https://nihongonotto.duckdns.org
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Configurar conexión SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.ORACLE_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/oracle
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/oracle ~/.ssh/known_hosts
+      - name: Desplegar con rsync y Docker
+        env:
+          DEPLOY_HOST: ubuntu@158.101.108.181
+          DEPLOY_SSH_KEY: /home/runner/.ssh/oracle
+        run: scripts/deploy-oracle.sh
+      - name: Verificar HTTPS
+        run: curl --fail --silent --show-error --retry 5 --retry-delay 3 https://nihongonotto.duckdns.org/api/health
+      - name: Eliminar clave temporal
+        if: always()
+        run: rm -f ~/.ssh/oracle
