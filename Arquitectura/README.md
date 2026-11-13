@@ -1,31 +1,22 @@
 # Arquitectura
 
-## Diseño
+Next.js reúne la interfaz y las rutas del servidor. OCI Language traduce el texto; Kuromoji y Kuroshiro generan las lecturas en kana y rōmaji. Las credenciales de Oracle permanecen en el servidor.
 
-Next.js reúne la interfaz y las funciones de servidor en un mismo proyecto. El servidor consultará OCI Language para traducir y procesará las lecturas del texto japonés.
-
-Supabase Auth administra las cuentas y las sesiones. PostgreSQL almacenará el cuaderno personal; las políticas de seguridad por fila (RLS) limitarán el acceso a los datos de cada usuario.
-
-Las credenciales privadas de Oracle permanecerán en el servidor, fuera del código enviado al navegador.
-
-## Despliegue
-
-La misma base de código se desplegará en una instancia de Oracle Cloud mediante Docker y en Vercel. Cada entorno tendrá su propia configuración y podrá conectarse al mismo proyecto de Supabase.
-
-El cuaderno se guardará en PostgreSQL, sin depender del disco del servidor ni del almacenamiento del navegador.
-
-## Datos
-
-Supabase Auth administra las identidades. La tabla `public.profiles` almacena el nombre del usuario y sus fechas, con acceso limitado al propietario mediante RLS. Las tablas de frases, traducciones y organización del cuaderno se incorporarán en futuras migraciones.
-
-El estado del modelo se documenta en [DB](DB/README.md).
-
-El flujo de cuentas y la configuración por entorno se describen en [Autenticación](Autenticacion.md).
+Supabase Auth administra las cuentas. PostgreSQL guarda perfiles y traducciones; las políticas RLS limitan cada registro a su propietario. El esquema y sus migraciones se mantienen en [DB](DB/README.md).
 
 ## Navegación
 
-Las rutas privadas comparten un menú lateral: `/traducir` como inicio, `/cuaderno` para el estudio guardado y `/cuenta` para nombre y contraseña. El menú admite teclado y movimiento reducido. Traducción y guardado siguen pendientes de conectar.
+Las rutas privadas son `/traducir`, `/cuaderno` y `/cuenta`. Escritorio usa un menú lateral; móvil, una barra inferior. La traducción actual permanece en memoria al cambiar de sección y se descarta al abandonar el espacio autenticado.
 
-El header y footer permanecen visibles. Traducir usa paneles con desplazamiento interno; Cuaderno desplaza únicamente sus tarjetas. Las lecturas se abren de una en una, con contracción previa de la anterior. Las animaciones respetan la preferencia de movimiento reducido.
+El cuaderno usa columnas independientes, lecturas desplegables, orden por arrastre y borrado recuperable. Las animaciones respetan la preferencia de movimiento reducido.
 
-El cuaderno distribuye las tarjetas en columnas sin filas de altura compartida. El asa superior permite reordenar con puntero o flechas del teclado; el orden se guarda en el perfil. Cerrar sesión contrae primero la navegación y solicita confirmación mediante un diálogo.
+## Despliegue
+
+Oracle Cloud ejecuta la aplicación con Docker; Vercel compila el mismo repositorio. Ambos entornos comparten Supabase y mantienen sus propias variables privadas. El cuaderno no depende del disco del servidor ni del navegador.
+
+## Referencias
+
+- [Autenticación](Autenticacion.md)
+- [Traducción y lecturas](Traduccion.md)
+- [Interfaz y adaptación móvil](Interfaz.md)
+- [Despliegue](Despliegue.md)

@@ -12,7 +12,7 @@ export function AuthForm({mode, name = ""}: {mode:Mode; name?:string}) {
   return <form action={action} className="auth-form">
     <fieldset disabled={pending}>
       {(mode === "register" || mode === "profile") && <label>Tu nombre<input name="display_name" autoComplete="nickname" placeholder="¿Cómo te llamas?" defaultValue={name} required maxLength={80}/></label>}
-      {["login","register","recover"].includes(mode) && <label>Correo electrónico<input type="email" name="email" autoComplete="email" placeholder="tu@correo.com" required maxLength={254}/></label>}
+      {["login","register","recover"].includes(mode) && <label>Correo electrónico<input type="email" inputMode="email" autoCapitalize="none" spellCheck={false} name="email" autoComplete="email" placeholder="tu@correo.com" required maxLength={254}/></label>}
       {hasPassword && <label>{mode === "password" ? "Nueva contraseña" : "Contraseña"}<span className="password-field"><input type={show?"text":"password"} name="password" autoComplete={mode==="login"?"current-password":"new-password"} placeholder={mode==="login"?"Tu contraseña":"Al menos 10 caracteres"} required minLength={mode==="login"?1:10} maxLength={128}/><button className="reveal" type="button" aria-label={show?"Ocultar contraseña":"Mostrar contraseña"} aria-pressed={show} onClick={()=>setShow(!show)}>{show?"Ocultar":"Ver"}</button></span></label>}
       {(mode === "register" || mode === "password") && <label>Confirmar contraseña<input type={show?"text":"password"} name="confirm_password" autoComplete="new-password" placeholder="Repite tu contraseña" required minLength={10} maxLength={128}/></label>}
       {mode==="login" && <Link className="forgot" href="/recuperar">Olvidé mi contraseña</Link>}

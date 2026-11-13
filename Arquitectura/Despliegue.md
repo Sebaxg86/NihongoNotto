@@ -14,7 +14,7 @@ El script construye la imagen, espera el estado saludable y actualiza el enlace 
 
 Supabase permite los callbacks públicos y locales. El dominio público es el Site URL. Las migraciones se ejecutan por separado una sola vez.
 
-GitHub Actions ejecuta pruebas, compilación, despliegue y comprobación HTTPS en cada push a `main` o ejecución manual. Los secretos `ORACLE_SSH_KEY`, `ORACLE_KNOWN_HOSTS` y `SUPABASE_PUBLISHABLE_KEY` están configurados en GitHub. La clave SSH es exclusiva para Actions y su acceso hereda los permisos del usuario ubuntu. No se ejecutan despliegues simultáneos. Vercel está publicado en https://nihongonotto.vercel.app.
+El repositorio incluye un flujo para GitHub Actions, pero el despliegue en Oracle se realiza actualmente con el script anterior. Vercel publica automáticamente los cambios de `main`. Las migraciones no forman parte de estos despliegues y se aplican por separado.
 
 ## Vercel
 

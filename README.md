@@ -1,36 +1,22 @@
 # NihongoNotto
 
-Aplicación web para estudiar japonés mediante traducciones y un cuaderno personal de frases.
+Aplicación para estudiar japonés mediante traducciones y un cuaderno personal de frases.
 
-## Funciones previstas
+- Traducción español ↔ japonés mediante OCI Language.
+- Texto japonés, lectura en kana y representación en rōmaji.
+- Cuentas y perfiles privados con Supabase Auth.
+- Cuaderno con tarjetas, copia, orden por arrastre y borrado con opción de deshacer.
+- Interfaz adaptable a escritorio y móvil, con acceso desde la pantalla de inicio.
 
-- Traducir del español al japonés y del japonés al español.
-- Consultar el texto japonés, su lectura en kana y su representación en rōmaji.
-- Crear una cuenta y acceder al cuaderno desde distintos dispositivos.
-- Guardar traducciones con notas, categorías y favoritos.
+## Tecnologías
 
-## Tecnologías propuestas
+Next.js, React y TypeScript; CSS; OCI Language; Kuromoji y Kuroshiro; Supabase Auth y PostgreSQL.
 
-| Componente | Tecnología |
-| --- | --- |
-| Interfaz y servidor | Next.js, React y TypeScript |
-| Estilos | Tailwind CSS |
-| Traducción | OCI Language |
-| Lecturas de japonés | Kuromoji y Kuroshiro, sujetos a validación |
-| Autenticación y base de datos | Supabase Auth y PostgreSQL |
-| Despliegue | Instancia de Oracle Cloud con Docker y Vercel |
-
-## Estado
-
-Proyecto de Supabase creado y enlazado mediante Supabase CLI. Primera migración aplicada: perfiles privados vinculados a Supabase Auth.
-
-Registro, inicio y cierre de sesión, recuperación de contraseña y edición del nombre implementados. El acceso por correo requiere confirmación. La entrega real de correos está pendiente de validación; el servicio predeterminado de Supabase limita los destinatarios a la organización.
-
-La configuración de conexión se guarda en `.env.local`, excluido de Git; `.env.example` contiene los nombres de las variables.
+Despliegues: [Oracle Cloud](https://nihongonotto.duckdns.org) con Docker y [Vercel](https://nihongonotto.vercel.app).
 
 ## Desarrollo local
 
-Requiere Node.js 22.12 o posterior. Los scripts incluyen un runtime Node.js 22 local para mantener compatibilidad.
+Requiere Node.js 22.12 o posterior.
 
 ```sh
 npm ci
@@ -38,7 +24,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Completar `.env.local` con la URL y clave publicable de Supabase y `APP_URL=http://localhost:3000`. Si el archivo ya existe, conservar sus valores. Abrir `http://localhost:3000`.
+Completar `.env.local` con las conexiones de Supabase y OCI, y `APP_URL=http://localhost:3000`. Conservar los valores si el archivo ya existe. Las claves privadas y las variables de entorno se excluyen de Git.
 
 ```sh
 npm test
@@ -46,11 +32,18 @@ npm run typecheck
 npm run build
 ```
 
-`npm start` ejecuta la compilación de producción. Docker y los despliegues públicos quedan para una etapa posterior.
+`npm start` ejecuta la compilación de producción.
+
+## Versiones
+
+`v1.0.0-desktop` conserva la versión de escritorio anterior a la adaptación móvil.
 
 ## Documentación
 
 - [Arquitectura](Arquitectura/README.md)
-- [Base de datos y actualización del esquema](Arquitectura/DB/README.md)
+- [Base de datos y migraciones](Arquitectura/DB/README.md)
 - [Esquema SQL](Arquitectura/DB/schema.sql)
 - [Autenticación](Arquitectura/Autenticacion.md)
+- [Traducción](Arquitectura/Traduccion.md)
+- [Interfaz](Arquitectura/Interfaz.md)
+- [Despliegue](Arquitectura/Despliegue.md)
