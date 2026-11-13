@@ -1,0 +1,9 @@
+"use client";
+import {useState,useRef,useEffect} from 'react';
+type Entry={id:string;source:string;original:string;translated:string;japanese:string;kana:string;romaji:string;created_at:string};
+export function NotebookCards({entries}:{entries:Entry[]}){
+ const [open,setOpen]=useState<string|null>(null);const [closing,setClosing]=useState(false);const target=useRef<string|null>(null);const timer=useRef<ReturnType<typeof setTimeout>|null>(null);
+ useEffect(()=>()=>{if(timer.current)clearTimeout(timer.current);},[]);
+ function toggle(id:string){if(closing){target.current=id;return;}if(open){target.current=open===id?null:id;setClosing(true);setOpen(null);const delay=window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:280;timer.current=setTimeout(()=>{setClosing(false);setOpen(target.current);},delay);}else setOpen(id);}
+ return <div className="notebook-scroll"><div className="notebook-grid">{entries.map((entry,index)=><article className="study-entry" key={entry.id} style={{'--delay':`${Math.min(index,8)*45}ms`} as React.CSSProperties}><header><span>{entry.source==='es'?'ES → 日本語':'日本語 → ES'}</span><time>{new Date(entry.created_at).toLocaleDateString('es-MX',{timeZone:'America/Monterrey'})}</time></header><h2 lang="ja">{entry.japanese}</h2><p className="entry-spanish">{entry.source==='es'?entry.original:entry.translated}</p><button className="reading-toggle" onClick={()=>toggle(entry.id)} aria-expanded={open===entry.id} aria-controls={`readings-${entry.id}`}>{open===entry.id?'Ocultar lecturas':'Mostrar lecturas'}<span className={open===entry.id?'rotated':''} aria-hidden="true">＋</span></button><div id={`readings-${entry.id}`} className={`reading-collapse ${open===entry.id?'expanded':''}`} inert={open!==entry.id}><div><div className="reading-collapse-content"><h3>Kana</h3><p lang="ja">{entry.kana}</p><h3>Rōmaji</h3><p lang="ja-Latn">{entry.romaji}</p></div></div></div></article>)}</div></div>;
+}
