@@ -1,5 +1,5 @@
 -- NihongoNotto: esquema vigente de la aplicación.
--- Corresponde a Migration-01, Migration-02 y Migration-03, aplicada el 2026-11-12 (America/Monterrey).
+-- Incluye Migration-01 a Migration-04, actualizada el 2026-11-13 (America/Monterrey).
 -- Referencia para una base nueva; no ejecutar sobre el proyecto existente.
 -- Los objetos internos de Supabase Auth son administrados por Supabase.
 
@@ -82,3 +82,8 @@ create policy notebook_insert_own on public.notebook_entries for insert to authe
 -- Orden personal del cuaderno.
 alter table public.profiles add column notebook_order uuid[] not null default '{}';
 grant update (notebook_order) on public.profiles to authenticated;
+
+-- Migration-04: borrado recuperable.
+alter table public.notebook_entries add column deleted_at timestamptz;
+grant update (deleted_at) on public.notebook_entries to authenticated;
+create policy notebook_update_own on public.notebook_entries for update to authenticated using ((select auth.uid())=user_id) with check ((select auth.uid())=user_id);

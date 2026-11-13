@@ -8,6 +8,8 @@
 
 | [Migration-03.sql](Migration-03.sql) | Orden personal del cuaderno. | Aplicada en NihongoNotto | 2026-11-12 |
 
+| [Migration-04.sql](Migration-04.sql) | Borrado recuperable de tarjetas. | Aplicada en NihongoNotto | 2026-11-13 |
+
 ## Ejecución
 
 Los archivos `Migration-01.sql`, `Migration-02.sql`, etc., son la fuente de cada cambio. `supabase/migrations/` contiene enlaces a ellos con el nombre temporal que requiere Supabase CLI; no hay dos copias del SQL.

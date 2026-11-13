@@ -27,3 +27,5 @@ RLS permite consultar y actualizar únicamente el perfil propio. El usuario solo
 La actualización del esquema forma parte del desarrollo; no hay sincronización automática en segundo plano. El cuaderno utiliza `notebook_entries`.
 
 `profiles.notebook_order` conserva los identificadores ordenados del cuaderno. La API valida la propiedad de cada tarjeta antes de guardar el orden; cada usuario solo modifica su perfil.
+
+`notebook_entries.deleted_at` marca el borrado recuperable. El cuaderno excluye esas filas y permite deshacer el último borrado durante la sesión de la pantalla. Los registros se conservan; RLS limita su actualización al propietario.
