@@ -1,15 +1,13 @@
 import { readFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import { SimpleAuthenticationDetailsProvider, Region } from 'oci-common';
 import { AIServiceLanguageClient } from 'oci-ailanguage';
 import Kuroshiro from 'kuroshiro';
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji';
-const require = createRequire(import.meta.url);
 let reader: Promise<Kuroshiro> | undefined;
 let analyzer: KuromojiAnalyzer;
 function getReader() {
- if(!reader) reader=(async()=>{const k=new Kuroshiro();analyzer=new KuromojiAnalyzer({dictPath:path.join(path.dirname(require.resolve('kuromoji/package.json')),'dict')});await k.init(analyzer);return k;})().catch(e=>{reader=undefined;throw e;});
+ if(!reader) reader=(async()=>{const k=new Kuroshiro();analyzer=new KuromojiAnalyzer({dictPath:path.join(process.cwd(),'node_modules','kuromoji','dict')});await k.init(analyzer);return k;})().catch(e=>{reader=undefined;throw e;});
  return reader;
 }
 function env(name:string){const value=process.env[name];if(!value)throw new Error(`Missing configuration: ${name}`);return value;}

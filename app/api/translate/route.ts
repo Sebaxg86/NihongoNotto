@@ -11,5 +11,5 @@ export async function POST(request:Request){
  let body;try{body=await request.json();}catch{return Response.json({error:'Solicitud no válida.'},{status:400,headers});}
  if(!body||typeof body.text!=='string'||!body.text.trim()||body.text.length>2000||!['es','ja'].includes(body.source))return Response.json({error:'Escribe entre 1 y 2000 caracteres y elige un idioma válido.'},{status:400,headers});
  try{return Response.json(await translate(body.text.trim(),body.source),{headers});}
- catch(e){console.error('Translation failed',e instanceof Error?e.name:'UnknownError');return Response.json({error:'No pudimos traducir el texto. Inténtalo de nuevo en unos momentos.'},{status:502,headers});}
+ catch(e){console.error('Translation failed',e instanceof Error?e.message:'UnknownError');return Response.json({error:'No pudimos traducir el texto. Inténtalo de nuevo en unos momentos.'},{status:502,headers});}
 }
