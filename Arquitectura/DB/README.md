@@ -25,3 +25,5 @@ RLS permite consultar y actualizar únicamente el perfil propio. El usuario solo
 - Una migración aplicada no se modifica: cualquier corrección se incorpora en la siguiente.
 
 La actualización del esquema forma parte del desarrollo; no hay sincronización automática en segundo plano. El cuaderno utiliza `notebook_entries`.
+
+`profiles.notebook_order` conserva los identificadores ordenados del cuaderno. La API valida la propiedad de cada tarjeta antes de guardar el orden; cada usuario solo modifica su perfil.

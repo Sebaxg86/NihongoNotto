@@ -27,3 +27,5 @@ El flujo de cuentas y la configuración por entorno se describen en [Autenticaci
 Las rutas privadas comparten un menú lateral: `/traducir` como inicio, `/cuaderno` para el estudio guardado y `/cuenta` para nombre y contraseña. El menú admite teclado y movimiento reducido. Traducción y guardado siguen pendientes de conectar.
 
 El header y footer permanecen visibles. Traducir usa paneles con desplazamiento interno; Cuaderno desplaza únicamente sus tarjetas. Las lecturas se abren de una en una, con contracción previa de la anterior. Las animaciones respetan la preferencia de movimiento reducido.
+
+El cuaderno distribuye las tarjetas en columnas sin filas de altura compartida. El asa superior permite reordenar con puntero o flechas del teclado; el orden se guarda en el perfil. Cerrar sesión contrae primero la navegación y solicita confirmación mediante un diálogo.
