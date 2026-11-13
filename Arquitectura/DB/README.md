@@ -13,6 +13,10 @@ Proyecto: **NihongoNotto**, PostgreSQL 17 en Supabase (Ohio).
 
 RLS permite consultar y actualizar únicamente el perfil propio. El usuario solo puede modificar `display_name`; las fechas se administran en la base de datos. No se permite acceso anónimo ni creación manual de perfiles desde la API.
 
+## Cuaderno
+
+`public.notebook_entries` guarda original, dirección, traducción, japonés, kana y rōmaji como un conjunto. El propietario se asigna desde la sesión; RLS restringe inserción y consulta al usuario. Las fechas e identidades no se pueden insertar desde el cliente. La pantalla muestra los 100 conjuntos más recientes.
+
 ## Esquema y migraciones
 
 - [schema.sql](schema.sql): estado vigente de los objetos propios de la aplicación; no se ejecuta sobre una base existente.
@@ -20,4 +24,4 @@ RLS permite consultar y actualizar únicamente el perfil propio. El usuario solo
 - Cada cambio aplicado debe actualizar el esquema y esta documentación en la misma entrega.
 - Una migración aplicada no se modifica: cualquier corrección se incorpora en la siguiente.
 
-La actualización del esquema forma parte del desarrollo; no hay sincronización automática en segundo plano. Las tablas del cuaderno se definirán en futuras migraciones.
+La actualización del esquema forma parte del desarrollo; no hay sincronización automática en segundo plano. El cuaderno utiliza `notebook_entries`.

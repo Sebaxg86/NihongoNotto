@@ -8,6 +8,6 @@ El diccionario se carga una vez por proceso. Las lecturas automáticas pueden fa
 
 Las credenciales OCI permanecen en variables del servidor. En desarrollo se lee la clave desde `OCI_PRIVATE_KEY_PATH`; para Vercel puede configurarse `OCI_PRIVATE_KEY` como secreto. Nunca incluir la clave privada en Git. La configuración de Next.js incluye el diccionario en el empaquetado del servidor; los despliegues todavía requieren validación en cada plataforma.
 
-La interfaz permite cambiar la dirección, limpiar el texto y copiar los resultados. El cuaderno aún no guarda traducciones; no se modificó la base de datos en esta etapa.
+La interfaz permite cambiar la dirección, limpiar el texto y copiar los resultados. El botón Guardar envía el conjunto completo a `/api/notebook`. Se persiste en `notebook_entries` con acceso privado por usuario.
 
 Validación: traducciones reales en ambos sentidos, conservación del katakana y conversión de kanji, compilación y pruebas de autenticación. La revisión visual completa del nuevo resultado queda pendiente.
