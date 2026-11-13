@@ -21,3 +21,7 @@ Supabase Auth administra las identidades. La tabla `public.profiles` almacena el
 El estado del modelo se documenta en [DB](DB/README.md).
 
 El flujo de cuentas y la configuración por entorno se describen en [Autenticación](Autenticacion.md).
+
+## Navegación
+
+Las rutas privadas comparten un menú lateral: `/traducir` como inicio, `/cuaderno` para el estudio guardado y `/cuenta` para nombre y contraseña. El menú admite teclado y movimiento reducido. Traducción y guardado siguen pendientes de conectar.

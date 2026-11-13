@@ -23,7 +23,7 @@ export async function login(_: FormState, form: FormData): Promise<FormState> {
     const {error} = await supabase.auth.signInWithPassword({email: input.email!, password: input.password!});
     if (error) return {error: error.code === "invalid_credentials" ? "El correo o la contraseña no son correctos." : friendlyError(error.code)};
   } catch { return {error: "No se pudo conectar. Inténtalo de nuevo."}; }
-  revalidatePath("/", "layout"); redirect("/cuenta");
+  revalidatePath("/", "layout"); redirect("/traducir");
 }
 export async function register(_: FormState, form: FormData): Promise<FormState> {
   const input = credentials(form, true);
