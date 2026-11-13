@@ -1,0 +1,20 @@
+# Archivos locales de macOS
+.DS_Store
+
+# Credenciales y configuración local
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencias y compilación
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+
+# Configuración local de servicios
+.vercel/
+supabase/.temp/
