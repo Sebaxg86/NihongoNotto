@@ -18,3 +18,5 @@ coverage/
 # Configuración local de servicios
 .vercel/
 supabase/.temp/
+
+.next-dev/
